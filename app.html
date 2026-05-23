@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Démo</title>
+    <style>
+        :root{--accent:#0066ff;--muted:#666;--bg:#f8fafc}
+        *{box-sizing:border-box}
+        body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+        header{background:#fff;border-bottom:1px solid #e6eef8}
+        .container{max-width:1000px;margin:0 auto;padding:24px}
+        nav{display:flex;justify-content:space-between;align-items:center}
+        nav .brand{font-weight:700;color:var(--accent)}
+        nav a{color:var(--muted);text-decoration:none;margin-left:16px}
+        .hero{display:flex;flex-direction:column;gap:18px;padding:48px 0}
+        .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:0}
+        .hero p{margin:0;color:var(--muted)}
+        .cta{margin-top:12px}
+        .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:8px;border:0;cursor:pointer}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
+        .card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+        footer{padding:24px 0;color:var(--muted);text-align:center;margin-top:32px}
+        form{display:grid;gap:8px}
+        input,textarea{padding:10px;border:1px solid #e6eef8;border-radius:8px}
+        @media(min-width:800px){ .hero{flex-direction:row;align-items:center;justify-content:space-between} .hero-left{max-width:60%} }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="brand">MonSite</div>
+                <div>
+                    <a href="#features">Fonctions</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-left">
+                <h1>Créez un site simple et réactif rapidement</h1>
+                <p>Exemple minimaliste — HTML, CSS et un petit formulaire de contact.</p>
+                <div class="cta">
+                    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contactez-nous</button>
+                </div>
+            </div>
+            <div>
+                <img src="https://via.placeholder.com/320x200.png?text=Image" alt="mock" style="border-radius:10px;max-width:100%">
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>Fonctions</h2>
+            <div class="features">
+                <div class="card">
+                    <h3>Responsive</h3>
+                    <p style="color:var(--muted)">S'adapte à tous les écrans avec une grille fluide.</p>
+                </div>
+                <div class="card">
+                    <h3>Léger</h3>
+                    <p style="color:var(--muted)">Code minimal pour démarrer vite et proprement.</p>
+                </div>
+                <div class="card">
+                    <h3>Contact</h3>
+                    <p style="color:var(--muted)">Formulaire simple avec retour immédiat côté client.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" style="margin-top:28px">
+            <h2>Contactez-nous</h2>
+            <div class="card" style="max-width:640px">
+                <form id="contactForm">
+                    <input type="text" id="name" placeholder="Votre nom" required>
+                    <input type="email" id="email" placeholder="Votre email" required>
+                    <textarea id="message" rows="4" placeholder="Votre message" required></textarea>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+                        <button type="submit" class="btn">Envoyer</button>
+                    </div>
+                </form>
+                <p id="status" style="color:var(--muted);margin-top:8px"></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">© 2026 MonSite — Exemple démonstration</div>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            if(!name||!email||!message){ document.getElementById('status').textContent='Veuillez remplir tous les champs.'; return; }
+            document.getElementById('status').textContent = 'Merci — message envoyé (simulé).';
+            this.reset();
+        });
+    </script>
+</body>
+</html>
