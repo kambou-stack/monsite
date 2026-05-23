@@ -3,39 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site Démo</title>
+    <title>Laboratoire de Chimie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root{--accent:#0066ff;--muted:#666;--bg:#f8fafc}
-        *{box-sizing:border-box}
-        body{font-family:Inter,system-ui,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
-        header{background:#fff;border-bottom:1px solid #e6eef8}
-        .container{max-width:1000px;margin:0 auto;padding:24px}
-        nav{display:flex;justify-content:space-between;align-items:center}
-        nav .brand{font-weight:700;color:var(--accent)}
-        nav a{color:var(--muted);text-decoration:none;margin-left:16px}
-        .hero{display:flex;flex-direction:column;gap:18px;padding:48px 0}
-        .hero h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:0}
-        .hero p{margin:0;color:var(--muted)}
-        .cta{margin-top:12px}
-        .btn{background:var(--accent);color:#fff;padding:10px 16px;border-radius:8px;border:0;cursor:pointer}
-        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:24px}
-        .card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
-        footer{padding:24px 0;color:var(--muted);text-align:center;margin-top:32px}
-        form{display:grid;gap:8px}
-        input,textarea{padding:10px;border:1px solid #e6eef8;border-radius:8px}
-
-        textarea{resize:none}
-        @media(min-width:800px){ .hero{flex-direction:row;align-items:center;justify-content:space-between} .hero-left{max-width:60%} }
+        :root {
+            --accent: #0066ff;
+            --accent-soft: #e7f0ff;
+            --bg: #f5f8ff;
+            --surface: #ffffff;
+            --text: #111827;
+            --muted: #667085;
+            --border: rgba(15, 23, 42, 0.08);
+            --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, rgba(0, 102, 255, 0.08), transparent 35%), var(--bg);
+            color: var(--text);
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(0, 102, 255, 0.08), transparent 20%), radial-gradient(circle at bottom left, rgba(71, 85, 105, 0.05), transparent 25%);
+            pointer-events: none;
+        }
+        body > * { position: relative; }
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .container {
+            width: min(1100px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 24px 0;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .brand {
+            font-size: 1.05rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 800;
+        }
+        nav a {
+            color: var(--muted);
+            text-decoration: none;
+            margin-left: 24px;
+            font-weight: 500;
+        }
+        nav a:hover { color: var(--text); }
+        .hero {
+            display: grid;
+            gap: 32px;
+            padding: 64px 0;
+            align-items: center;
+        }
+        .hero-left h1 {
+            margin: 0;
+            font-size: clamp(2rem, 4vw, 3.6rem);
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+        }
+        .hero-left p {
+            max-width: 620px;
+            margin: 24px 0 0;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.75;
+        }
+        .cta { margin-top: 28px; display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 46px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 0 22px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+            box-shadow: 0 18px 30px rgba(0, 102, 255, 0.24);
+        }
+        .btn:hover {
+            transform: translateY(-1px);
+            background: #0052cc;
+            box-shadow: 0 20px 34px rgba(0, 102, 255, 0.24);
+        }
+        .features {
+            display: grid;
+            gap: 18px;
+            margin-top: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+        .testimonial-section {
+            margin-top: 42px;
+        }
+        .testimonial-section h2 {
+            margin-bottom: 20px;
+        }
+        .testimonial-track {
+            overflow: hidden;
+            position: relative;
+            border-radius: 28px;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        .testimonial-row {
+            display: flex;
+            gap: 18px;
+            padding: 24px 0;
+            animation: slide-left 36s linear infinite;
+        }
+        .testimonial-row:hover { animation-play-state: paused; }
+        .testimonial-card {
+            min-width: 260px;
+            max-width: 340px;
+            flex-shrink: 0;
+            background: #f8fbff;
+            border: 1px solid rgba(0, 102, 255, 0.12);
+            border-radius: 22px;
+            padding: 20px;
+            box-shadow: 0 18px 36px rgba(15, 23, 42, 0.08);
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            white-space: normal;
+        }
+        .testimonial-card h4 {
+            margin: 0 0 8px;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+        .testimonial-card .date {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+        .testimonial-card p {
+            margin: 0;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 18px;
+        }
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            background: #fff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        .social-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(15, 23, 42, 0.12);
+            background: var(--accent-soft);
+        }
+        @keyframes slide-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            cursor: default;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 102, 255, 0.16);
+            box-shadow: 0 26px 48px rgba(15, 23, 42, 0.12);
+        }
+        .card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-size: 1.18rem;
+        }
+        .card p { margin: 0; color: var(--muted); line-height: 1.75; }
+        footer { padding: 32px 0; text-align: center; color: var(--muted); font-size: 0.95rem; }
+        form { display: grid; gap: 16px; }
+        input, textarea {
+            width: 100%;
+            padding: 16px 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(15, 23, 42, 0.12);
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: rgba(0, 102, 255, 0.35);
+            box-shadow: 0 0 0 4px rgba(0, 102, 255, 0.12);
+        }
+        textarea { resize: vertical; min-height: 150px; }
+        .hero-image {
+            width: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(15, 23, 42, 0.12);
+        }
+        .hero-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        #contact .card { max-width: 720px; margin-top: 16px; }
+        @media (min-width: 900px) {
+            .hero { grid-template-columns: 1.1fr 0.9fr; gap: 48px; }
+            nav a { margin-left: 32px; }
+            .container { padding: 32px 0; }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
             <nav>
-                <div class="brand">Azanag</div>
+                <div class="brand">Laboratoire Azanga</div>
                 <div>
-                    <a href="#features">Fonctions</a>
-                    <a href="#contact">Contact</a>
+                    <a href="#features">Expertises</a>
+                    <a href="#contact">Devis</a>
                 </div>
             </nav>
         </div>
@@ -44,42 +265,80 @@
     <main class="container">
         <section class="hero">
             <div class="hero-left">
-                <h1>Créez un site simple et réactif rapidement</h1>
-                <p>Exemple minimaliste — HTML, CSS et un petit formulaire de contact.</p>
+                <h1>Valorisez vos projets de chimie avec une vitrine claire et premium</h1>
+                <p>Services de chimie analytique, synthèse moléculaire et innovation durable présentés avec élégance et rigueur scientifique.</p>
                 <div class="cta">
-                    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contactez-nous</button>
+                    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Demander un devis</button>
                 </div>
             </div>
-            <div>
-                <img src="/tech.jpeg" alt="Image de démonstration" style="width:100%;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.06)">
+            <div class="hero-image">
+                <img src="chimie.webp" alt="Laboratoire de chimie moderne">
             </div>
         </section>
 
         <section id="features">
-            <h2>Fonctions</h2>
+            <h2>Expertises</h2>
             <div class="features">
                 <div class="card">
-                    <h3>Responsive</h3>
-                    <p style="color:var(--muted)">S'adapte à tous les écrans avec une grille fluide.</p>
+                    <h3>Synthèse moléculaire</h3>
+                    <p style="color:var(--muted)">Conception et production de composés sur-mesure pour vos projets de recherche et développement.</p>
                 </div>
                 <div class="card">
-                    <h3>Léger</h3>
-                    <p style="color:var(--muted)">Code minimal pour démarrer vite et proprement.</p>
+                    <h3>Analyse et caractérisation</h3>
+                    <p style="color:var(--muted)">Mesures précises, spectroscopies et tests de qualité pour garantir la fiabilité de vos résultats.</p>
                 </div>
                 <div class="card">
-                    <h3>Contact</h3>
-                    <p style="color:var(--muted)">Formulaire simple avec retour immédiat côté client.</p>
+                    <h3>Solutions durables</h3>
+                    <p style="color:var(--muted)">Approche responsable pour des procédés plus sûrs, plus propres et plus efficients.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonial-section">
+            <h2>Ce que nos clients disent</h2>
+            <div class="testimonial-track">
+                <div class="testimonial-row">
+                    <div class="testimonial-card">
+                        <h4>Dr. Léa Martin</h4>
+                        <time class="date" datetime="2026-05-10">10 mai 2026</time>
+                        <p>« L’équipe a livré une analyse précise en un temps record. Leur rigueur en chimie organique est exceptionnelle. »</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4>Prof. Samir K.</h4>
+                        <time class="date" datetime="2026-04-22">22 avril 2026</time>
+                        <p>« Une collaboration technique et fluide, avec des résultats fiables pour nos études de formulation. »</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4>Ing. Claire Dubois</h4>
+                        <time class="date" datetime="2026-03-15">15 mars 2026</time>
+                        <p>« Service client réactif, protocole clair et respect des normes de laboratoire. Je recommande. »</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4>Dr. Julien Moreau</h4>
+                        <time class="date" datetime="2025-12-02">2 déc. 2025</time>
+                        <p>« Les solutions proposées ont parfaitement soutenu notre projet de chimie verte. »</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4>Dr. Anaïs Petit</h4>
+                        <time class="date" datetime="2025-10-08">8 oct. 2025</time>
+                        <p>« Résultats reproductibles et documentation complète — un vrai plus pour notre laboratoire. »</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4>Prof. Samir K.</h4>
+                        <time class="date" datetime="2026-04-22">22 avril 2026</time>
+                        <p>« Une collaboration technique et fluide, avec des résultats fiables pour nos études de formulation. »</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="contact" style="margin-top:28px">
-            <h2>Contactez-nous</h2>
+            <h2>Demandez un devis</h2>
             <div class="card" style="max-width:640px">
                 <form id="contactForm">
                     <input type="text" id="name" placeholder="Votre nom" required>
-                    <input type="email" id="email" placeholder="Votre email" required>
-                    <textarea id="message" rows="4" placeholder="Votre message" required></textarea>
+                    <input type="email" id="email" placeholder="Votre email professionnel" required>
+                    <textarea id="message" rows="4" placeholder="Décrivez votre projet de chimie" required></textarea>
                     <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
                         <button type="submit" class="btn">Envoyer</button>
                     </div>
@@ -90,7 +349,15 @@
     </main>
 
     <footer>
-        <div class="container">© 2026 MonSite — Exemple démonstration</div>
+        <div class="container">
+            <div>© 2026 Laboratoire Azanga — Chimie, recherche et innovation</div>
+            <div class="social-links">
+                <a href="https://www.facebook.com" target="_blank" rel="noreferrer">📘 Facebook</a>
+                <a href="https://wa.me/+22677432465" target="_blank" rel="noreferrer">💬 WhatsApp</a>
+                <a href="https://www.youtube.com" target="_blank" rel="noreferrer">▶️ YouTube</a>
+                <a href="https://twitter.com" target="_blank" rel="noreferrer">✕</a>
+            </div>
+        </div>
     </footer>
 
     <script>
